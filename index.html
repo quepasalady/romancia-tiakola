@@ -1,18 +1,36 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>ROMANCIA</title>
+
 <style>
   :root{
-    --bg:#000; --fg:#fff; --mute:#8a8a8a; --line:rgba(255,255,255,.14);
+    --bg:#000;
+    --fg:#fff;
+    --mute:#8a8a8a;
+    --line:rgba(255,255,255,.14);
+
     --clip-h:min(60vh,540px);
     --clip-w:calc(var(--clip-h) * 16 / 9);
+
     box-sizing:border-box;
   }
-  *{box-sizing:border-box; margin:0; padding:0;}
-  html,body{height:100%; background:var(--bg); overflow:hidden;}
+
+  *{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+  }
+
+  html,body{
+    height:100%;
+    background:var(--bg);
+    overflow:hidden;
+  }
+
   body{
     font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
     color:var(--fg);
@@ -20,268 +38,829 @@
     padding-top:env(safe-area-inset-top,0px);
     padding-bottom:env(safe-area-inset-bottom,0px);
   }
-  button{font-family:inherit; background:none; border:none; color:inherit; cursor:pointer;}
-  a{color:inherit; text-decoration:none;}
+
+  button{
+    font-family:inherit;
+    background:none;
+    border:none;
+    color:inherit;
+    cursor:pointer;
+  }
+
+  a{
+    color:inherit;
+    text-decoration:none;
+  }
 
   /* ---------- INTRO ---------- */
+
   #intro{
-    position:fixed; inset:0; background:#000; z-index:100;
-    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    position:fixed;
+    inset:0;
+    background:#000;
+    z-index:100;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
     gap:28px;
     transition:opacity 900ms ease;
   }
-  #intro.hide{opacity:0; pointer-events:none;}
-  #intro h1{
-    font-weight:700; letter-spacing:-0.085em; font-size:clamp(56px,14vw,180px);
-    line-height:1;
-  }
-  #playBtn{
-    letter-spacing:0.2em; font-size:12px; font-weight:400;
-    animation:pulse 1.8s ease-in-out infinite;
-    padding:6px 2px; border-bottom:1px solid rgba(255,255,255,.3);
-  }
-  @keyframes pulse{
-    0%{opacity:1;} 50%{opacity:.45;} 100%{opacity:1;}
-  }
-  @media (prefers-reduced-motion:reduce){ #playBtn{animation:none;} }
 
-  /* ---------- APP ---------- */
-  #app{position:fixed; inset:0; opacity:0; transition:opacity 900ms ease;}
-  #app.show{opacity:1;}
-
-  nav{
-    position:fixed; top:0; left:0; right:0; z-index:50;
-    top:env(safe-area-inset-top,0px);
-    display:flex; align-items:center; justify-content:space-between;
-    padding:22px 28px;
-    font-size:11px; letter-spacing:0.14em;
+  #intro.hide{
+    opacity:0;
     pointer-events:none;
   }
-  nav *{pointer-events:auto;}
-  .nav-left{font-size:13px; letter-spacing:-0.05em; font-weight:700;}
-  .nav-center{display:flex; gap:22px;}
-  .nav-center button{opacity:.55; transition:opacity 250ms ease; padding:4px 0;}
-  .nav-center button.active{opacity:1;}
-  .nav-center button:hover{opacity:1;}
-  .nav-right{opacity:.85;}
-  .nav-right:hover{opacity:1;}
+
+  #intro h1{
+    font-weight:700;
+    letter-spacing:-0.085em;
+    font-size:clamp(56px,14vw,180px);
+    line-height:1;
+  }
+
+  #playBtn{
+    letter-spacing:0.2em;
+    font-size:12px;
+    font-weight:400;
+    animation:pulse 1.8s ease-in-out infinite;
+    padding:6px 2px;
+    border-bottom:1px solid rgba(255,255,255,.3);
+  }
+
+  @keyframes pulse{
+    0%{opacity:1;}
+    50%{opacity:.45;}
+    100%{opacity:1;}
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    #playBtn{
+      animation:none;
+    }
+  }
+
+  /* ---------- APP ---------- */
+
+  #app{
+    position:fixed;
+    inset:0;
+    opacity:0;
+    transition:opacity 900ms ease;
+  }
+
+  #app.show{
+    opacity:1;
+  }
+
+  nav{
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    z-index:50;
+
+    top:env(safe-area-inset-top,0px);
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:22px 28px;
+
+    font-size:11px;
+    letter-spacing:0.14em;
+
+    pointer-events:none;
+  }
+
+  nav *{
+    pointer-events:auto;
+  }
+
+  .nav-left{
+    font-size:13px;
+    letter-spacing:-0.05em;
+    font-weight:700;
+  }
+
+  .nav-center{
+    display:flex;
+    gap:22px;
+  }
+
+  .nav-center button{
+    opacity:.55;
+    transition:opacity 250ms ease;
+    padding:4px 0;
+  }
+
+  .nav-center button.active{
+    opacity:1;
+  }
+
+  .nav-center button:hover{
+    opacity:1;
+  }
+
+  .nav-right{
+    opacity:.85;
+  }
+
+  .nav-right:hover{
+    opacity:1;
+  }
 
   /* ---------- HORIZONTAL RAIL ---------- */
+
   #rail{
-    height:100%; width:100%;
-    overflow-x:auto; overflow-y:hidden;
-    scrollbar-width:none; -ms-overflow-style:none;
-    display:flex; align-items:center;
+    height:100%;
+    width:100%;
+    max-width:100%;
+
+    overflow-x:auto;
+    overflow-y:hidden;
+
+    scrollbar-width:none;
+    -ms-overflow-style:none;
+
+    display:flex;
+    align-items:center;
+
     scroll-behavior:auto;
   }
-  #rail::-webkit-scrollbar{display:none;}
+
+  #rail::-webkit-scrollbar{
+    display:none;
+  }
 
   .view{
-    flex:0 0 auto; display:flex; align-items:center; height:100%;
+    flex:0 0 auto;
+    display:flex;
+    align-items:center;
+    height:100%;
+
     padding:0 5vw;
     gap:1.2vw;
-  }
-  .view.hidden{display:none;}
 
-  /* films & track cards share this */
-  .clip-wrap{display:flex; flex-direction:column; flex:0 0 auto;}
+    max-width:100%;
+  }
+
+  .view.hidden{
+    display:none;
+  }
+
+  /* ---------- VIDEO CARDS ---------- */
+
+  .clip-wrap{
+    display:flex;
+    flex-direction:column;
+    flex:0 0 auto;
+    max-width:100%;
+  }
+
   .clip{
-    width:var(--clip-w); height:var(--clip-h);
-    background:#0c0c0c; position:relative; cursor:default;
+    width:var(--clip-w);
+    height:var(--clip-h);
+
+    background:#0c0c0c;
+
+    position:relative;
+    cursor:default;
     overflow:hidden;
   }
-  .clip.playable{cursor:pointer;}
+
+  .clip.playable{
+    cursor:pointer;
+  }
+
   .clip .ph{
-    position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
-    color:var(--mute); font-size:12px; letter-spacing:.12em;
+    position:absolute;
+    inset:0;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    color:var(--mute);
+    font-size:12px;
+    letter-spacing:.12em;
+
     transition:opacity 300ms ease;
   }
-  .clip.playable:hover .ph{opacity:.5;}
-  .clip iframe{width:100%; height:100%; border:0; display:block;}
-  .clip .dot{
-    position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
-    width:44px; height:44px; border:1px solid rgba(255,255,255,.4); border-radius:50%;
-    display:flex; align-items:center; justify-content:center;
-    opacity:0; transition:opacity 250ms ease;
+
+  .clip.playable:hover .ph{
+    opacity:.5;
   }
-  .clip.playable:hover .dot{opacity:1;}
-  .clip .dot::after{content:""; border-left:10px solid #fff; border-top:6px solid transparent; border-bottom:6px solid transparent; margin-left:3px;}
-  .meta{margin-top:16px; width:var(--clip-w);}
-  .meta .t{font-size:13px; font-weight:400;}
-  .meta .y{font-size:11px; color:var(--mute); margin-top:3px;}
 
-  /* album grouping: flattens into the reel on desktop, accordions on mobile */
-  .album-group{display:contents;}
-  .tracks-inner{display:contents;}
-  .cover-wrap .cover{transition:opacity 250ms ease;}
+  .clip iframe{
+    width:100%;
+    height:100%;
+    border:0;
+    display:block;
+  }
 
-  /* album cover card */
+  .clip .dot{
+    position:absolute;
+    left:50%;
+    top:50%;
+
+    transform:translate(-50%,-50%);
+
+    width:44px;
+    height:44px;
+
+    border:1px solid rgba(255,255,255,.4);
+    border-radius:50%;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    opacity:0;
+    transition:opacity 250ms ease;
+  }
+
+  .clip.playable:hover .dot{
+    opacity:1;
+  }
+
+  .clip .dot::after{
+    content:"";
+
+    border-left:10px solid #fff;
+    border-top:6px solid transparent;
+    border-bottom:6px solid transparent;
+
+    margin-left:3px;
+  }
+
+  .meta{
+    margin-top:16px;
+    width:var(--clip-w);
+  }
+
+  .meta .t{
+    font-size:13px;
+    font-weight:400;
+  }
+
+  .meta .y{
+    font-size:11px;
+    color:var(--mute);
+    margin-top:3px;
+  }
+
+  /* ---------- ALBUMS ---------- */
+
+  .album-group{
+    display:contents;
+  }
+
+  .tracks-inner{
+    display:contents;
+  }
+
+  .cover-wrap .cover{
+    transition:opacity 250ms ease;
+  }
+
+  /* ---------- ALBUM COVER ---------- */
+
+  /*
+    IMPORTANT:
+    La cover reste parfaitement carrée,
+    mais sa hauteur est exactement la même
+    que celle des vidéos.
+
+    Vidéo :
+    largeur = --clip-w
+    hauteur = --clip-h
+
+    Cover :
+    largeur = --clip-h
+    hauteur = --clip-h
+  */
+
   .cover{
-  flex:0 0 auto;
-  width:min(46vw,700px);
-  height:min(46vw,700px);
-  background:#111;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  overflow:hidden;
-  color:var(--mute);
-  font-size:11px;
-  letter-spacing:.14em;
-  text-align:center;
-}
+    flex:0 0 auto;
 
-.cover img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  display:block;
-}
+    width:var(--clip-h);
+    height:var(--clip-h);
 
-.cover-wrap{
-  display:flex;
-  flex-direction:column;
-  flex:0 0 auto;
-}
+    background:#111;
 
-.cover-wrap .meta{
-  width:min(46vw,700px);
-}
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    overflow:hidden;
+
+    color:var(--mute);
+    font-size:11px;
+    letter-spacing:.14em;
+    text-align:center;
+  }
+
+  .cover img{
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+
+    display:block;
+  }
+
+  .cover-wrap{
+    display:flex;
+    flex-direction:column;
+    flex:0 0 auto;
+  }
+
+  .cover-wrap .meta{
+    width:var(--clip-h);
+  }
 
   /* ---------- FOCUS / ISOLATE MODE ---------- */
+
   #focusView{
-    position:fixed; inset:0; z-index:200;
-    display:none; align-items:center; justify-content:center;
+    position:fixed;
+    inset:0;
+    z-index:200;
+
+    display:none;
+    align-items:center;
+    justify-content:center;
+
     background:rgba(0,0,0,.65);
+
     backdrop-filter:blur(50px) brightness(.3);
     -webkit-backdrop-filter:blur(50px) brightness(.3);
   }
-  #focusView.open{display:flex;}
-  .focus-inner{display:flex; flex-direction:column; align-items:center;}
+
+  #focusView.open{
+    display:flex;
+  }
+
+  .focus-inner{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+  }
+
   .focus-clip{
-    width:min(72vw,1150px); aspect-ratio:16/9; background:#0c0c0c;
-    position:relative; cursor:pointer; overflow:hidden;
+    width:min(72vw,1150px);
+    aspect-ratio:16/9;
+
+    background:#0c0c0c;
+
+    position:relative;
+    cursor:pointer;
+    overflow:hidden;
   }
+
   .focus-clip .ph{
-    position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
-    color:var(--mute); font-size:12px; letter-spacing:.12em;
+    position:absolute;
+    inset:0;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    color:var(--mute);
+    font-size:12px;
+    letter-spacing:.12em;
   }
+
   .focus-clip .dot{
-    position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
-    width:54px; height:54px; border:1px solid rgba(255,255,255,.5); border-radius:50%;
-    display:flex; align-items:center; justify-content:center;
+    position:absolute;
+    left:50%;
+    top:50%;
+
+    transform:translate(-50%,-50%);
+
+    width:54px;
+    height:54px;
+
+    border:1px solid rgba(255,255,255,.5);
+    border-radius:50%;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
   }
-  .focus-clip .dot::after{content:""; border-left:12px solid #fff; border-top:7px solid transparent; border-bottom:7px solid transparent; margin-left:4px;}
-  .focus-clip iframe{width:100%; height:100%; border:0; display:block;}
-  .focus-title{margin-top:20px; font-size:13px; letter-spacing:.04em;}
-  #focusClose{position:absolute; top:26px; right:30px; font-size:12px; letter-spacing:.12em; opacity:.7;}
-  #focusClose:hover{opacity:1;}
-  body.isolated nav{opacity:0; pointer-events:none; transition:opacity 300ms ease;}
+
+  .focus-clip .dot::after{
+    content:"";
+
+    border-left:12px solid #fff;
+    border-top:7px solid transparent;
+    border-bottom:7px solid transparent;
+
+    margin-left:4px;
+  }
+
+  .focus-clip iframe{
+    width:100%;
+    height:100%;
+    border:0;
+    display:block;
+  }
+
+  .focus-title{
+    margin-top:20px;
+    font-size:13px;
+    letter-spacing:.04em;
+  }
+
+  #focusClose{
+    position:absolute;
+    top:26px;
+    right:30px;
+
+    font-size:12px;
+    letter-spacing:.12em;
+    opacity:.7;
+  }
+
+  #focusClose:hover{
+    opacity:1;
+  }
+
+  body.isolated nav{
+    opacity:0;
+    pointer-events:none;
+    transition:opacity 300ms ease;
+  }
+
+  /* ---------- CONTACT ---------- */
 
   #contact{
-    position:fixed; inset:0; background:#000; z-index:200;
-    display:none; align-items:center; justify-content:center;
+    position:fixed;
+    inset:0;
+
+    background:#000;
+    z-index:200;
+
+    display:none;
+    align-items:center;
+    justify-content:center;
   }
-  #contact.open{display:flex;}
-  .cform{width:min(90vw,380px);}
-  .cform h2{font-size:13px; letter-spacing:.16em; margin-bottom:34px; font-weight:400;}
-  .cform label{display:block; font-size:10px; letter-spacing:.12em; color:var(--mute); margin-bottom:6px;}
-  .cform .field{margin-bottom:22px;}
-  .cform input, .cform textarea{
-    width:100%; background:transparent; border:none; border-bottom:1px solid var(--line);
-    color:#fff; font-size:13px; padding:6px 0; font-family:inherit; resize:none;
+
+  #contact.open{
+    display:flex;
   }
-  .cform input:focus, .cform textarea:focus{outline:none; border-color:#fff;}
-  .cform button{margin-top:12px; font-size:11px; letter-spacing:.14em; border-bottom:1px solid rgba(255,255,255,.3); padding-bottom:3px;}
-  .cform button:hover{opacity:.6;}
-  .cform .note{margin-top:20px; font-size:12px; color:var(--mute);}
-  #cClose{position:absolute; top:26px; right:30px; font-size:12px; letter-spacing:.12em; opacity:.7;}
-  #cClose:hover{opacity:1;}
-  :focus-visible{outline:1px solid #fff; outline-offset:2px;}
+
+  .cform{
+    width:min(90vw,380px);
+  }
+
+  .cform h2{
+    font-size:13px;
+    letter-spacing:.16em;
+    margin-bottom:34px;
+    font-weight:400;
+  }
+
+  .cform label{
+    display:block;
+    font-size:10px;
+    letter-spacing:.12em;
+    color:var(--mute);
+    margin-bottom:6px;
+  }
+
+  .cform .field{
+    margin-bottom:22px;
+  }
+
+  .cform input,
+  .cform textarea{
+    width:100%;
+
+    background:transparent;
+    border:none;
+    border-bottom:1px solid var(--line);
+
+    color:#fff;
+
+    font-size:13px;
+    padding:6px 0;
+
+    font-family:inherit;
+    resize:none;
+  }
+
+  .cform input:focus,
+  .cform textarea:focus{
+    outline:none;
+    border-color:#fff;
+  }
+
+  .cform button{
+    margin-top:12px;
+
+    font-size:11px;
+    letter-spacing:.14em;
+
+    border-bottom:1px solid rgba(255,255,255,.3);
+
+    padding-bottom:3px;
+  }
+
+  .cform button:hover{
+    opacity:.6;
+  }
+
+  .cform .note{
+    margin-top:20px;
+    font-size:12px;
+    color:var(--mute);
+  }
+
+  #cClose{
+    position:absolute;
+    top:26px;
+    right:30px;
+
+    font-size:12px;
+    letter-spacing:.12em;
+    opacity:.7;
+  }
+
+  #cClose:hover{
+    opacity:1;
+  }
+
+  :focus-visible{
+    outline:1px solid #fff;
+    outline-offset:2px;
+  }
+
+  /* ---------- MOBILE ---------- */
 
   @media (max-width:680px){
-    :root{--clip-h:34vh;}
-    #rail{
-      flex-direction:column; align-items:flex-start;
-      overflow-x:hidden; overflow-y:auto;
+
+    :root{
+      --clip-h:34vh;
+      --clip-w:calc(var(--clip-h) * 16 / 9);
     }
-    .view{
-      flex-direction:column; height:auto; width:100%;
+
+    html,
+    body{
+      width:100%;
+      max-width:100%;
+      overflow:hidden;
+    }
+
+    #rail{
+      width:100%;
+      max-width:100%;
+
+      flex-direction:column;
       align-items:center;
+
+      overflow-x:hidden;
+      overflow-y:auto;
+    }
+
+    .view{
+      flex-direction:column;
+
+      height:auto;
+
+      width:100%;
+      max-width:100%;
+
+      align-items:center;
+
       padding:14vh 0;
       gap:8vh;
     }
-    .cover{width:80vw;}
-    .cover-wrap .meta{width:80vw;}
-    .cover-wrap{cursor:pointer;}
-    .album-group{
-      display:flex; flex-direction:column; align-items:center;
-      width:100%; flex:0 0 auto;
+
+    /* Mobile video */
+
+    .clip{
+      width:90vw;
+      max-width:90vw;
+
+      height:calc(90vw * 9 / 16);
     }
+
+    .clip-wrap{
+      width:90vw;
+      max-width:90vw;
+    }
+
+    /* Mobile cover
+       Toujours carrée,
+       sans dépasser l'écran.
+    */
+
+    .cover{
+      width:80vw;
+      height:80vw;
+
+      max-width:80vw;
+      max-height:80vw;
+    }
+
+    .cover-wrap{
+      width:100%;
+      max-width:100%;
+
+      align-items:center;
+
+      cursor:pointer;
+    }
+
+    .cover-wrap .meta{
+      width:80vw;
+      max-width:80vw;
+    }
+
+    .meta{
+      max-width:100%;
+    }
+
+    .album-group{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+
+      width:100%;
+      max-width:100%;
+
+      flex:0 0 auto;
+    }
+
     .tracks-inner{
-      display:flex; flex-direction:column; align-items:center; width:100%;
-      gap:8vh; overflow:hidden; max-height:0; opacity:0;
-      transition:max-height 450ms ease, opacity 350ms ease, margin-top 450ms ease;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+
+      width:100%;
+      max-width:100%;
+
+      gap:8vh;
+
+      overflow:hidden;
+
+      max-height:0;
+      opacity:0;
+
+      transition:
+        max-height 450ms ease,
+        opacity 350ms ease,
+        margin-top 450ms ease;
+
       margin-top:0;
     }
-    .tracks-inner.expanded{max-height:6000px; opacity:1; margin-top:8vh;}
-    nav{padding:18px 18px;}
+
+    .tracks-inner.expanded{
+      max-height:6000px;
+      opacity:1;
+      margin-top:8vh;
+    }
+
+    nav{
+      padding:18px 18px;
+    }
   }
 </style>
 </head>
+
 <body>
+
+  <!-- INTRO -->
 
   <div id="intro">
     <h1>ROMANCIA</h1>
     <button id="playBtn">PLAY</button>
   </div>
 
+
+  <!-- APP -->
+
   <div id="app">
+
     <nav>
-      <div class="nav-left">ROMANCIA</div>
-      <div class="nav-center">
-        <button data-view="films" class="active">FILMS</button>
-        <button data-view="music">MUSIC VIDEOS</button>
+
+      <div class="nav-left">
+        ROMANCIA
       </div>
-      <button class="nav-right" id="openContact">CONTACT</button>
+
+      <div class="nav-center">
+        <button data-view="films" class="active">
+          FILMS
+        </button>
+
+        <button data-view="music">
+          MUSIC VIDEOS
+        </button>
+      </div>
+
+      <button class="nav-right" id="openContact">
+        CONTACT
+      </button>
+
     </nav>
 
+
     <div id="rail">
+
       <div class="view" id="filmsView"></div>
+
       <div class="view hidden" id="music"></div>
+
     </div>
+
   </div>
+
+
+  <!-- CONTACT -->
 
   <div id="contact">
-    <button id="cClose">CLOSE</button>
+
+    <button id="cClose">
+      CLOSE
+    </button>
+
     <form class="cform" id="cform">
+
       <h2>CONTACT</h2>
-      <div class="field"><label for="cname">Name</label><input id="cname" required></div>
-      <div class="field"><label for="cemail">Email</label><input id="cemail" type="email" required></div>
-      <div class="field"><label for="cmsg">Message</label><textarea id="cmsg" rows="4" required></textarea></div>
-      <button type="submit">Send</button>
+
+      <div class="field">
+        <label for="cname">Name</label>
+        <input id="cname" required>
+      </div>
+
+      <div class="field">
+        <label for="cemail">Email</label>
+        <input id="cemail" type="email" required>
+      </div>
+
+      <div class="field">
+        <label for="cmsg">Message</label>
+        <textarea id="cmsg" rows="4" required></textarea>
+      </div>
+
+      <button type="submit">
+        Send
+      </button>
+
       <div class="note" id="cnote"></div>
+
     </form>
+
   </div>
 
-<script>
-/* ============ DATA — edit here ============ */
-// vimeo: numeric Vimeo ID as a string, or null until you have it
-const projects = Array.from({length:16}, (_,i)=>({
-  title:`Project ${String(i+1).padStart(2,'0')}`,
-  year:"",
-  vimeo:null
-}));
-projects[0] = {title:"KNIT SHOP LANCEMENT", year:"", vimeo:"1229484203"};
-projects[1] = {title:"SANS UN BRUIT — APPLE", year:"", vimeo:"1229485529"};
-projects[2] = {title:"URGENCE SANS GYRO", year:"", vimeo:"1229485661"};
 
-// each album: its own cover + tracklist. Add more albums below the same way.
+<script>
+
+/* =========================================================
+   DATA
+========================================================= */
+
+// vimeo: numeric Vimeo ID as a string, or null until you have it
+
+const projects = Array.from(
+  {length:16},
+  (_,i)=>({
+    title:`Project ${String(i+1).padStart(2,'0')}`,
+    year:"",
+    vimeo:null
+  })
+);
+
+projects[0] = {
+  title:"KNIT SHOP LANCEMENT",
+  year:"",
+  vimeo:"1229484203"
+};
+
+projects[1] = {
+  title:"SANS UN BRUIT — APPLE",
+  year:"",
+  vimeo:"1229485529"
+};
+
+projects[2] = {
+  title:"URGENCE SANS GYRO",
+  year:"",
+  vimeo:"1229485661"
+};
+
+
+// ALBUMS
+
 const albums = [
+
   {
     title:"TIAKOLA — WPOINTM",
     date:"25 September 2026",
     cover:"images/wpointm-cover.jpg",
+
     tracks:[
       {number:"01", title:"Les misérables", youtube:null},
       {number:"02", title:"Savage", youtube:null},
@@ -299,165 +878,490 @@ const albums = [
       {number:"14", title:"AF1 Nouvo", youtube:null},
       {number:"15", title:"JetLag", youtube:null},
       {number:"16", title:"La Nocturne", youtube:null},
-      {number:"17", title:"Mission", youtube:null},
+      {number:"17", title:"Mission", youtube:null}
     ]
   },
+
+
   {
     title:"BARA, DIXAL & LA KADRILLA — ERRANCE",
     date:"25 June 2026",
     cover:"images/errance-cover.jpg",
+
     tracks:[
-      {number:"01", title:"80.13", youtube:"ac7aHAKLPho"},
-      {number:"02", title:"N.B.A", youtube:"9oNvK61nHig"},
+      {
+        number:"01",
+        title:"80.13",
+        youtube:"ac7aHAKLPho"
+      },
+
+      {
+        number:"02",
+        title:"N.B.A",
+        youtube:"9oNvK61nHig"
+      }
     ]
-  },
+  }
+
 ];
 
-// Configure to send the contact form. Add a Formspree form id here.
-const FORMSPREE_ID = ""; // e.g. "abcdwxyz" -> https://formspree.io/f/abcdwxyz
-/* ============================================ */
 
-/* ---------- FILMS ---------- */
+// Formspree
+
+const FORMSPREE_ID = "";
+
+
+/* =========================================================
+   FILMS
+========================================================= */
+
 const filmsView = document.getElementById('filmsView');
+
 projects.forEach((p,i)=>{
+
   const wrap = document.createElement('div');
+
   wrap.className = 'clip-wrap';
+
   wrap.innerHTML = `
-    <div class="clip${p.vimeo?' playable':''}" data-kind="vimeo" data-i="${i}">
-      <div class="ph">${String(i+1).padStart(2,'0')}</div>
+
+    <div
+      class="clip${p.vimeo?' playable':''}"
+      data-kind="vimeo"
+      data-i="${i}"
+    >
+
+      <div class="ph">
+        ${String(i+1).padStart(2,'0')}
+      </div>
+
       <div class="dot"></div>
+
     </div>
-    <div class="meta"><div class="t">${p.title}</div>${p.year?`<div class="y">${p.year}</div>`:''}</div>
+
+    <div class="meta">
+
+      <div class="t">
+        ${p.title}
+      </div>
+
+      ${
+        p.year
+        ? `<div class="y">${p.year}</div>`
+        : ''
+      }
+
+    </div>
+
   `;
+
   filmsView.appendChild(wrap);
+
 });
 
-/* ---------- MUSIC VIDEOS ---------- */
+
+/* =========================================================
+   MUSIC VIDEOS
+========================================================= */
+
 const musicView = document.getElementById('music');
 
 albums.forEach((album, ai)=>{
+
   const group = document.createElement('div');
+
   group.className = 'album-group';
 
+
+  /* COVER */
+
   const coverWrap = document.createElement('div');
+
   coverWrap.className = 'cover-wrap';
+
+
   coverWrap.innerHTML = `
+
     <div class="cover">
-  ${album.cover ? `<img src="${album.cover}" alt="${album.title}">` : '— cover —'}
-</div>
-    <div class="meta"><div class="t">${album.title}</div><div class="y">${album.date}</div></div>
+
+      ${
+        album.cover
+        ? `<img src="${album.cover}" alt="${album.title}">`
+        : '— cover —'
+      }
+
+    </div>
+
+    <div class="meta">
+
+      <div class="t">
+        ${album.title}
+      </div>
+
+      <div class="y">
+        ${album.date}
+      </div>
+
+    </div>
+
   `;
-  coverWrap.addEventListener('click', ()=>{
-    if(!isMobileLayout()) return;
-    tracksInner.classList.toggle('expanded');
-  });
+
+
+  /* TRACKS */
 
   const tracksInner = document.createElement('div');
+
   tracksInner.className = 'tracks-inner';
-  album.tracks.forEach((t,ti)=>{
-    const wrap = document.createElement('div');
-    wrap.className = 'clip-wrap';
-    wrap.innerHTML = `
-      <div class="clip${t.youtube?' playable':''}" data-kind="youtube" data-album="${ai}" data-i="${ti}">
-        <div class="ph">${t.number}</div>
-        <div class="dot"></div>
-      </div>
-      <div class="meta"><div class="t">${t.title}</div></div>
-    `;
-    tracksInner.appendChild(wrap);
+
+
+  coverWrap.addEventListener('click', ()=>{
+
+    if(!isMobileLayout()) return;
+
+    tracksInner.classList.toggle('expanded');
+
   });
+
+
+  album.tracks.forEach((t,ti)=>{
+
+    const wrap = document.createElement('div');
+
+    wrap.className = 'clip-wrap';
+
+
+    wrap.innerHTML = `
+
+      <div
+        class="clip${t.youtube?' playable':''}"
+        data-kind="youtube"
+        data-album="${ai}"
+        data-i="${ti}"
+      >
+
+        <div class="ph">
+          ${t.number}
+        </div>
+
+        <div class="dot"></div>
+
+      </div>
+
+      <div class="meta">
+
+        <div class="t">
+          ${t.title}
+        </div>
+
+      </div>
+
+    `;
+
+
+    tracksInner.appendChild(wrap);
+
+  });
+
 
   group.appendChild(coverWrap);
+
   group.appendChild(tracksInner);
+
   musicView.appendChild(group);
+
 });
 
-/* click handling for both galleries — plays the video natively, inline,
-   directly inside the clip (real YouTube/Vimeo player, no button/modal) */
+
+/* =========================================================
+   PLAY INLINE
+========================================================= */
+
 function playInline(el, kind, id){
-  el.innerHTML = kind === 'vimeo'
-    ? `<iframe src="https://player.vimeo.com/video/${id}?autoplay=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>`
-    : `<iframe src="https://www.youtube.com/embed/${id}?autoplay=1&rel=0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>`;
+
+  el.innerHTML =
+    kind === 'vimeo'
+
+      ? `
+        <iframe
+          src="https://player.vimeo.com/video/${id}?autoplay=1"
+          allow="autoplay; fullscreen; picture-in-picture"
+          allowfullscreen>
+        </iframe>
+      `
+
+      : `
+        <iframe
+          src="https://www.youtube.com/embed/${id}?autoplay=1&rel=0"
+          allow="autoplay; encrypted-media; picture-in-picture"
+          allowfullscreen>
+        </iframe>
+      `;
 }
 
+
+/* =========================================================
+   CLICK VIDEO
+========================================================= */
+
 document.querySelectorAll('.clip.playable').forEach(el=>{
+
   el.addEventListener('click', ()=>{
+
     const i = +el.dataset.i;
+
+
     if(el.dataset.kind === 'vimeo'){
+
       const p = projects[i];
-      if(p.vimeo) playInline(el, 'vimeo', p.vimeo);
-    } else {
-      const t = albums[+el.dataset.album].tracks[i];
-      if(t.youtube) playInline(el, 'youtube', t.youtube);
+
+      if(p.vimeo){
+        playInline(el, 'vimeo', p.vimeo);
+      }
+
     }
+
+    else{
+
+      const t =
+        albums[+el.dataset.album]
+        .tracks[i];
+
+      if(t.youtube){
+        playInline(el, 'youtube', t.youtube);
+      }
+
+    }
+
   });
+
 });
 
-/* intro */
-document.getElementById('playBtn').addEventListener('click', ()=>{
-  document.getElementById('intro').classList.add('hide');
-  document.getElementById('app').classList.add('show');
-});
 
-/* horizontal rail — translate vertical wheel to horizontal scroll (desktop/tablet only) */
+/* =========================================================
+   INTRO
+========================================================= */
+
+document
+  .getElementById('playBtn')
+  .addEventListener('click', ()=>{
+
+    document
+      .getElementById('intro')
+      .classList.add('hide');
+
+    document
+      .getElementById('app')
+      .classList.add('show');
+
+  });
+
+
+/* =========================================================
+   HORIZONTAL RAIL
+========================================================= */
+
 const rail = document.getElementById('rail');
-const isMobileLayout = () => window.matchMedia('(max-width:680px)').matches;
-rail.addEventListener('wheel', (e)=>{
-  if(isMobileLayout()) return;
-  if(Math.abs(e.deltaY) > Math.abs(e.deltaX)){
-    e.preventDefault();
-    rail.scrollLeft += e.deltaY;
-  }
-}, {passive:false});
 
-/* nav switching */
-document.querySelectorAll('.nav-center button').forEach(btn=>{
-  btn.addEventListener('click', ()=>{
-    document.querySelectorAll('.nav-center button').forEach(b=>b.classList.remove('active'));
-    btn.classList.add('active');
-    const view = btn.dataset.view;
-    document.getElementById('filmsView').classList.toggle('hidden', view!=='films');
-    document.getElementById('music').classList.toggle('hidden', view!=='music');
-    rail.scrollTo(0,0);
-  });
-});
+const isMobileLayout = () =>
+  window.matchMedia('(max-width:680px)').matches;
 
-/* contact */
-const contact = document.getElementById('contact');
-document.getElementById('openContact').addEventListener('click', ()=> contact.classList.add('open'));
-document.getElementById('cClose').addEventListener('click', ()=> contact.classList.remove('open'));
 
-document.getElementById('cform').addEventListener('submit', async (e)=>{
-  e.preventDefault();
-  const note = document.getElementById('cnote');
-  const name = document.getElementById('cname').value;
-  const email = document.getElementById('cemail').value;
-  const message = document.getElementById('cmsg').value;
+rail.addEventListener(
+  'wheel',
+  (e)=>{
 
-  if(!FORMSPREE_ID){
-    note.textContent = 'Contact form not yet configured — add a Formspree form ID in the code.';
-    return;
-  }
-  try{
-    const res = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
-      method:'POST',
-      headers:{'Content-Type':'application/json', 'Accept':'application/json'},
-      body: JSON.stringify({name, email, message})
-    });
-    if(res.ok){
-      document.getElementById('cform').reset();
-      note.textContent = 'Message sent.';
-    } else {
-      note.textContent = 'Something went wrong. Please try again.';
+    if(isMobileLayout()) return;
+
+    if(
+      Math.abs(e.deltaY) >
+      Math.abs(e.deltaX)
+    ){
+
+      e.preventDefault();
+
+      rail.scrollLeft += e.deltaY;
+
     }
-  }catch(err){
-    note.textContent = 'Something went wrong. Please try again.';
-  }
-});
 
-document.addEventListener('keydown', (e)=>{
-  if(e.key === 'Escape'){ contact.classList.remove('open'); }
-});
+  },
+  {passive:false}
+);
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+document
+  .querySelectorAll('.nav-center button')
+  .forEach(btn=>{
+
+    btn.addEventListener('click', ()=>{
+
+      document
+        .querySelectorAll('.nav-center button')
+        .forEach(b =>
+          b.classList.remove('active')
+        );
+
+      btn.classList.add('active');
+
+
+      const view = btn.dataset.view;
+
+
+      document
+        .getElementById('filmsView')
+        .classList.toggle(
+          'hidden',
+          view !== 'films'
+        );
+
+
+      document
+        .getElementById('music')
+        .classList.toggle(
+          'hidden',
+          view !== 'music'
+        );
+
+
+      rail.scrollTo(0,0);
+
+    });
+
+  });
+
+
+/* =========================================================
+   CONTACT
+========================================================= */
+
+const contact =
+  document.getElementById('contact');
+
+
+document
+  .getElementById('openContact')
+  .addEventListener(
+    'click',
+    () => contact.classList.add('open')
+  );
+
+
+document
+  .getElementById('cClose')
+  .addEventListener(
+    'click',
+    () => contact.classList.remove('open')
+  );
+
+
+document
+  .getElementById('cform')
+  .addEventListener(
+    'submit',
+    async (e)=>{
+
+      e.preventDefault();
+
+
+      const note =
+        document.getElementById('cnote');
+
+
+      const name =
+        document.getElementById('cname').value;
+
+
+      const email =
+        document.getElementById('cemail').value;
+
+
+      const message =
+        document.getElementById('cmsg').value;
+
+
+      if(!FORMSPREE_ID){
+
+        note.textContent =
+          'Contact form not yet configured — add a Formspree form ID in the code.';
+
+        return;
+      }
+
+
+      try{
+
+        const res = await fetch(
+          `https://formspree.io/f/${FORMSPREE_ID}`,
+          {
+            method:'POST',
+
+            headers:{
+              'Content-Type':'application/json',
+              'Accept':'application/json'
+            },
+
+            body:JSON.stringify({
+              name,
+              email,
+              message
+            })
+          }
+        );
+
+
+        if(res.ok){
+
+          document
+            .getElementById('cform')
+            .reset();
+
+          note.textContent =
+            'Message sent.';
+
+        }
+
+        else{
+
+          note.textContent =
+            'Something went wrong. Please try again.';
+
+        }
+
+      }
+
+      catch(err){
+
+        note.textContent =
+          'Something went wrong. Please try again.';
+
+      }
+
+    }
+  );
+
+
+/* =========================================================
+   ESCAPE
+========================================================= */
+
+document.addEventListener(
+  'keydown',
+  (e)=>{
+
+    if(e.key === 'Escape'){
+
+      contact.classList.remove('open');
+
+    }
+
+  }
+);
+
 </script>
+
 </body>
 </html>
+```
