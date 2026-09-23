@@ -117,20 +117,36 @@
 
   /* album cover card */
   .cover{
-  flex:0 0 auto; width:min(46vw,700px); aspect-ratio:1/1; background:#111;
-  display:flex; align-items:center; justify-content:center;
-  color:var(--mute); font-size:11px; letter-spacing:.14em; text-align:center;
+  flex:0 0 auto;
+  width:min(46vw,700px);
+  height:min(46vw,700px);
+  background:#111;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+  color:var(--mute);
+  font-size:11px;
+  letter-spacing:.14em;
+  text-align:center;
 }
 
 .cover img{
   width:100%;
   height:100%;
-  object-fit:contain;
+  object-fit:cover;
   display:block;
 }
 
-.cover-wrap{display:flex; flex-direction:column; flex:0 0 auto;}
-  .cover-wrap .meta{width:min(46vw,700px);}
+.cover-wrap{
+  display:flex;
+  flex-direction:column;
+  flex:0 0 auto;
+}
+
+.cover-wrap .meta{
+  width:min(46vw,700px);
+}
 
   /* ---------- FOCUS / ISOLATE MODE ---------- */
   #focusView{
