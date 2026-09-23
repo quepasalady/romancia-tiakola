@@ -7,7 +7,8 @@
 <style>
   :root{
     --bg:#000; --fg:#fff; --mute:#8a8a8a; --line:rgba(255,255,255,.14);
-    --clip-w:min(90vw,1500px);
+    --clip-h:min(60vh,540px);
+    --clip-w:calc(var(--clip-h) * 16 / 9);
     box-sizing:border-box;
   }
   *{box-sizing:border-box; margin:0; padding:0;}
@@ -85,7 +86,7 @@
   /* films & track cards share this */
   .clip-wrap{display:flex; flex-direction:column; flex:0 0 auto;}
   .clip{
-    width:var(--clip-w); aspect-ratio:16/9;
+    width:var(--clip-w); height:var(--clip-h);
     background:#0c0c0c; position:relative; cursor:default;
     overflow:hidden;
   }
@@ -96,6 +97,7 @@
     transition:opacity 300ms ease;
   }
   .clip.playable:hover .ph{opacity:.5;}
+  .clip iframe{width:100%; height:100%; border:0; display:block;}
   .clip .dot{
     position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
     width:44px; height:44px; border:1px solid rgba(255,255,255,.4); border-radius:50%;
@@ -122,25 +124,35 @@
   .cover-wrap{display:flex; flex-direction:column; flex:0 0 auto;}
   .cover-wrap .meta{width:min(46vw,700px);}
 
-  /* ---------- WATCH CONFIRM ---------- */
-  #confirmModal{
+  /* ---------- FOCUS / ISOLATE MODE ---------- */
+  #focusView{
     position:fixed; inset:0; z-index:200;
     display:none; align-items:center; justify-content:center;
-    background:rgba(0,0,0,.55);
-    backdrop-filter:blur(40px) brightness(.35);
-    -webkit-backdrop-filter:blur(40px) brightness(.35);
+    background:rgba(0,0,0,.65);
+    backdrop-filter:blur(50px) brightness(.3);
+    -webkit-backdrop-filter:blur(50px) brightness(.3);
   }
-  #confirmModal.open{display:flex;}
-  .cf-inner{text-align:center;}
-  .cf-title{font-size:14px; letter-spacing:.04em; margin-bottom:22px;}
-  .cf-launch{
-    font-size:11px; letter-spacing:.14em;
-    border:1px solid rgba(255,255,255,.4); padding:14px 26px;
+  #focusView.open{display:flex;}
+  .focus-inner{display:flex; flex-direction:column; align-items:center;}
+  .focus-clip{
+    width:min(72vw,1150px); aspect-ratio:16/9; background:#0c0c0c;
+    position:relative; cursor:pointer; overflow:hidden;
   }
-  .cf-launch:hover{background:#fff; color:#000;}
-  #cfClose{position:absolute; top:26px; right:30px; font-size:12px; letter-spacing:.12em; opacity:.7;}
-  #cfClose:hover{opacity:1;}
-
+  .focus-clip .ph{
+    position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+    color:var(--mute); font-size:12px; letter-spacing:.12em;
+  }
+  .focus-clip .dot{
+    position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
+    width:54px; height:54px; border:1px solid rgba(255,255,255,.5); border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .focus-clip .dot::after{content:""; border-left:12px solid #fff; border-top:7px solid transparent; border-bottom:7px solid transparent; margin-left:4px;}
+  .focus-clip iframe{width:100%; height:100%; border:0; display:block;}
+  .focus-title{margin-top:20px; font-size:13px; letter-spacing:.04em;}
+  #focusClose{position:absolute; top:26px; right:30px; font-size:12px; letter-spacing:.12em; opacity:.7;}
+  #focusClose:hover{opacity:1;}
+  body.isolated nav{opacity:0; pointer-events:none; transition:opacity 300ms ease;}
 
   #contact{
     position:fixed; inset:0; background:#000; z-index:200;
@@ -164,7 +176,7 @@
   :focus-visible{outline:1px solid #fff; outline-offset:2px;}
 
   @media (max-width:680px){
-    :root{--clip-w:92vw;}
+    :root{--clip-h:34vh;}
     #rail{
       flex-direction:column; align-items:flex-start;
       overflow-x:hidden; overflow-y:auto;
@@ -216,14 +228,6 @@
     </div>
   </div>
 
-  <div id="confirmModal">
-    <button id="cfClose">CLOSE</button>
-    <div class="cf-inner">
-      <div class="cf-title" id="cfTitle"></div>
-      <button class="cf-launch" id="cfLaunch">▶ REGARDER SUR <span id="cfPlatform"></span></button>
-    </div>
-  </div>
-
   <div id="contact">
     <button id="cClose">CLOSE</button>
     <form class="cform" id="cform">
@@ -244,13 +248,16 @@ const projects = Array.from({length:16}, (_,i)=>({
   year:"",
   vimeo:null
 }));
+projects[0] = {title:"KNIT SHOP LANCEMENT", year:"", vimeo:"1229484203"};
+projects[1] = {title:"SANS UN BRUIT — APPLE", year:"", vimeo:"1229485529"};
+projects[2] = {title:"URGENCE SANS GYRO", year:"", vimeo:"1229485661"};
 
 // each album: its own cover + tracklist. Add more albums below the same way.
 const albums = [
   {
     title:"TIAKOLA — WPOINTM",
     date:"25 September 2026",
-    cover:null,
+    cover:"images/wpointm-cover.jpg",
     tracks:[
       {number:"01", title:"Les misérables", youtube:null},
       {number:"02", title:"Savage", youtube:null},
@@ -274,7 +281,7 @@ const albums = [
   {
     title:"BARA, DIXAL & LA KADRILLA — ERRANCE",
     date:"25 June 2026",
-    cover:null,
+    cover:"images/errance.jpg",
     tracks:[
       {number:"01", title:"80.13", youtube:"ac7aHAKLPho"},
       {number:"02", title:"N.B.A", youtube:"9oNvK61nHig"},
@@ -339,39 +346,23 @@ albums.forEach((album, ai)=>{
   musicView.appendChild(group);
 });
 
-/* click handling for both galleries — first click shows a confirm step,
-   the button inside actually launches the clip in a new tab */
-const confirmModal = document.getElementById('confirmModal');
-const cfTitle = document.getElementById('cfTitle');
-const cfPlatform = document.getElementById('cfPlatform');
-const cfLaunch = document.getElementById('cfLaunch');
-let pendingUrl = null;
-
-function openConfirm(title, platform, url){
-  cfTitle.textContent = title;
-  cfPlatform.textContent = platform;
-  pendingUrl = url;
-  confirmModal.classList.add('open');
+/* click handling for both galleries — plays the video natively, inline,
+   directly inside the clip (real YouTube/Vimeo player, no button/modal) */
+function playInline(el, kind, id){
+  el.innerHTML = kind === 'vimeo'
+    ? `<iframe src="https://player.vimeo.com/video/${id}?autoplay=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>`
+    : `<iframe src="https://www.youtube.com/embed/${id}?autoplay=1&rel=0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>`;
 }
-function closeConfirm(){
-  confirmModal.classList.remove('open');
-  pendingUrl = null;
-}
-document.getElementById('cfClose').addEventListener('click', closeConfirm);
-cfLaunch.addEventListener('click', ()=>{
-  if(pendingUrl) window.open(pendingUrl, '_blank', 'noopener');
-  closeConfirm();
-});
 
 document.querySelectorAll('.clip.playable').forEach(el=>{
   el.addEventListener('click', ()=>{
     const i = +el.dataset.i;
     if(el.dataset.kind === 'vimeo'){
       const p = projects[i];
-      if(p.vimeo) openConfirm(p.title, 'VIMEO', `https://vimeo.com/${p.vimeo}`);
+      if(p.vimeo) playInline(el, 'vimeo', p.vimeo);
     } else {
       const t = albums[+el.dataset.album].tracks[i];
-      if(t.youtube) openConfirm(t.title, 'YOUTUBE', `https://www.youtube.com/watch?v=${t.youtube}`);
+      if(t.youtube) playInline(el, 'youtube', t.youtube);
     }
   });
 });
@@ -439,7 +430,7 @@ document.getElementById('cform').addEventListener('submit', async (e)=>{
 });
 
 document.addEventListener('keydown', (e)=>{
-  if(e.key === 'Escape'){ closeConfirm(); contact.classList.remove('open'); }
+  if(e.key === 'Escape'){ contact.classList.remove('open'); }
 });
 </script>
 </body>
