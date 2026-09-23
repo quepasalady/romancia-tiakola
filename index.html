@@ -259,8 +259,63 @@
     display:block;
   }
 
+  /* ---------- YOUTUBE THUMBNAIL ---------- */
+
+  .youtube-thumb{
+    position:absolute;
+    inset:0;
+
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+
+    display:block;
+  }
+
+  .youtube-play{
+    position:absolute;
+
+    left:50%;
+    top:50%;
+
+    transform:translate(-50%,-50%);
+
+    width:68px;
+    height:48px;
+
+    background:#ff0000;
+    border-radius:14px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    transition:
+      transform 200ms ease,
+      opacity 200ms ease;
+  }
+
+  .youtube-play-icon{
+    width:0;
+    height:0;
+
+    border-top:9px solid transparent;
+    border-bottom:9px solid transparent;
+    border-left:14px solid #fff;
+
+    margin-left:4px;
+  }
+
+  .clip.playable:hover .youtube-play{
+    transform:translate(-50%,-50%) scale(1.08);
+  }
+
+  /* ---------- CUSTOM VIDEO PLAY BUTTON ---------- */
+
   .clip .dot{
     position:absolute;
+
     left:50%;
     top:50%;
 
@@ -277,6 +332,7 @@
     justify-content:center;
 
     opacity:0;
+
     transition:opacity 250ms ease;
   }
 
@@ -327,18 +383,17 @@
   /* ---------- ALBUM COVER ---------- */
 
   /*
-    IMPORTANT:
-    La cover reste parfaitement carrée,
-    mais sa hauteur est exactement la même
+    Cover carrée.
+    Sa hauteur est exactement la même
     que celle des vidéos.
 
-    Vidéo :
-    largeur = --clip-w
-    hauteur = --clip-h
+    Video:
+    width  = --clip-w
+    height = --clip-h
 
-    Cover :
-    largeur = --clip-h
-    hauteur = --clip-h
+    Cover:
+    width  = --clip-h
+    height = --clip-h
   */
 
   .cover{
@@ -380,7 +435,7 @@
     width:var(--clip-h);
   }
 
-  /* ---------- FOCUS / ISOLATE MODE ---------- */
+  /* ---------- FOCUS ---------- */
 
   #focusView{
     position:fixed;
@@ -637,7 +692,7 @@
       gap:8vh;
     }
 
-    /* Mobile video */
+    /* Mobile videos */
 
     .clip{
       width:90vw;
@@ -651,10 +706,7 @@
       max-width:90vw;
     }
 
-    /* Mobile cover
-       Toujours carrée,
-       sans dépasser l'écran.
-    */
+    /* Mobile covers */
 
     .cover{
       width:80vw;
@@ -729,17 +781,27 @@
 </style>
 </head>
 
+
 <body>
 
-  <!-- INTRO -->
+  <!-- =====================================================
+       INTRO
+  ====================================================== -->
 
   <div id="intro">
+
     <h1>ROMANCIA</h1>
-    <button id="playBtn">PLAY</button>
+
+    <button id="playBtn">
+      PLAY
+    </button>
+
   </div>
 
 
-  <!-- APP -->
+  <!-- =====================================================
+       APP
+  ====================================================== -->
 
   <div id="app">
 
@@ -750,6 +812,7 @@
       </div>
 
       <div class="nav-center">
+
         <button data-view="films" class="active">
           FILMS
         </button>
@@ -757,6 +820,7 @@
         <button data-view="music">
           MUSIC VIDEOS
         </button>
+
       </div>
 
       <button class="nav-right" id="openContact">
@@ -777,7 +841,9 @@
   </div>
 
 
-  <!-- CONTACT -->
+  <!-- =====================================================
+       CONTACT
+  ====================================================== -->
 
   <div id="contact">
 
@@ -790,25 +856,57 @@
       <h2>CONTACT</h2>
 
       <div class="field">
-        <label for="cname">Name</label>
-        <input id="cname" required>
+
+        <label for="cname">
+          Name
+        </label>
+
+        <input
+          id="cname"
+          required
+        >
+
       </div>
 
-      <div class="field">
-        <label for="cemail">Email</label>
-        <input id="cemail" type="email" required>
-      </div>
 
       <div class="field">
-        <label for="cmsg">Message</label>
-        <textarea id="cmsg" rows="4" required></textarea>
+
+        <label for="cemail">
+          Email
+        </label>
+
+        <input
+          id="cemail"
+          type="email"
+          required
+        >
+
       </div>
+
+
+      <div class="field">
+
+        <label for="cmsg">
+          Message
+        </label>
+
+        <textarea
+          id="cmsg"
+          rows="4"
+          required
+        ></textarea>
+
+      </div>
+
 
       <button type="submit">
         Send
       </button>
 
-      <div class="note" id="cnote"></div>
+      <div
+        class="note"
+        id="cnote"
+      ></div>
 
     </form>
 
@@ -821,16 +919,19 @@
    DATA
 ========================================================= */
 
-// vimeo: numeric Vimeo ID as a string, or null until you have it
-
 const projects = Array.from(
   {length:16},
   (_,i)=>({
+
     title:`Project ${String(i+1).padStart(2,'0')}`,
+
     year:"",
+
     vimeo:null
+
   })
 );
+
 
 projects[0] = {
   title:"KNIT SHOP LANCEMENT",
@@ -838,11 +939,13 @@ projects[0] = {
   vimeo:"1229484203"
 };
 
+
 projects[1] = {
   title:"SANS UN BRUIT — APPLE",
   year:"",
   vimeo:"1229485529"
 };
+
 
 projects[2] = {
   title:"URGENCE SANS GYRO",
@@ -851,61 +954,157 @@ projects[2] = {
 };
 
 
-// ALBUMS
+/* =========================================================
+   ALBUMS
+========================================================= */
 
 const albums = [
 
   {
     title:"TIAKOLA — WPOINTM",
+
     date:"25 September 2026",
+
     cover:"images/wpointm-cover.jpg",
 
     tracks:[
-      {number:"01", title:"Les misérables", youtube:null},
-      {number:"02", title:"Savage", youtube:null},
-      {number:"03", title:"Mode de vie", youtube:null},
-      {number:"04", title:"Mélo Décalé", youtube:null},
-      {number:"05", title:"Bottega", youtube:null},
-      {number:"06", title:"Sans toi", youtube:null},
-      {number:"07", title:"Best", youtube:null},
-      {number:"08", title:"Cœur de Pirate", youtube:null},
-      {number:"09", title:"Juda", youtube:null},
-      {number:"10", title:"WpointM", youtube:null},
-      {number:"11", title:"Vrai OG", youtube:null},
-      {number:"12", title:"Caméléon", youtube:null},
-      {number:"13", title:"La Vie D'un Homme", youtube:null},
-      {number:"14", title:"AF1 Nouvo", youtube:null},
-      {number:"15", title:"JetLag", youtube:null},
-      {number:"16", title:"La Nocturne", youtube:null},
-      {number:"17", title:"Mission", youtube:null}
+
+      {
+        number:"01",
+        title:"Les misérables",
+        youtube:null
+      },
+
+      {
+        number:"02",
+        title:"Savage",
+        youtube:null
+      },
+
+      {
+        number:"03",
+        title:"Mode de vie",
+        youtube:null
+      },
+
+      {
+        number:"04",
+        title:"Mélo Décalé",
+        youtube:null
+      },
+
+      {
+        number:"05",
+        title:"Bottega",
+        youtube:null
+      },
+
+      {
+        number:"06",
+        title:"Sans toi",
+        youtube:null
+      },
+
+      {
+        number:"07",
+        title:"Best",
+        youtube:null
+      },
+
+      {
+        number:"08",
+        title:"Cœur de Pirate",
+        youtube:null
+      },
+
+      {
+        number:"09",
+        title:"Juda",
+        youtube:null
+      },
+
+      {
+        number:"10",
+        title:"WpointM",
+        youtube:null
+      },
+
+      {
+        number:"11",
+        title:"Vrai OG",
+        youtube:null
+      },
+
+      {
+        number:"12",
+        title:"Caméléon",
+        youtube:null
+      },
+
+      {
+        number:"13",
+        title:"La Vie D'un Homme",
+        youtube:null
+      },
+
+      {
+        number:"14",
+        title:"AF1 Nouvo",
+        youtube:null
+      },
+
+      {
+        number:"15",
+        title:"JetLag",
+        youtube:null
+      },
+
+      {
+        number:"16",
+        title:"La Nocturne",
+        youtube:null
+      },
+
+      {
+        number:"17",
+        title:"Mission",
+        youtube:null
+      }
+
     ]
   },
 
 
   {
     title:"BARA, DIXAL & LA KADRILLA — ERRANCE",
+
     date:"25 June 2026",
+
     cover:"images/errance-cover.jpg",
 
     tracks:[
+
       {
         number:"01",
-        title:"BARA & Diaxal - 80.13 feat TVLM",
+        title:"80.13",
         youtube:"ac7aHAKLPho"
       },
 
       {
         number:"02",
-        title:"BARA & Diaxal - N.B.A",
+        title:"N.B.A",
         youtube:"9oNvK61nHig"
       }
+
     ]
   }
 
 ];
 
 
-// Formspree
+/* =========================================================
+   FORMSPREE
+========================================================= */
 
 const FORMSPREE_ID = "";
 
@@ -914,13 +1113,19 @@ const FORMSPREE_ID = "";
    FILMS
 ========================================================= */
 
-const filmsView = document.getElementById('filmsView');
+const filmsView =
+  document.getElementById('filmsView');
+
 
 projects.forEach((p,i)=>{
 
-  const wrap = document.createElement('div');
+  const wrap =
+    document.createElement('div');
 
-  wrap.className = 'clip-wrap';
+
+  wrap.className =
+    'clip-wrap';
+
 
   wrap.innerHTML = `
 
@@ -931,12 +1136,15 @@ projects.forEach((p,i)=>{
     >
 
       <div class="ph">
+
         ${String(i+1).padStart(2,'0')}
+
       </div>
 
       <div class="dot"></div>
 
     </div>
+
 
     <div class="meta">
 
@@ -954,6 +1162,7 @@ projects.forEach((p,i)=>{
 
   `;
 
+
   filmsView.appendChild(wrap);
 
 });
@@ -963,20 +1172,28 @@ projects.forEach((p,i)=>{
    MUSIC VIDEOS
 ========================================================= */
 
-const musicView = document.getElementById('music');
+const musicView =
+  document.getElementById('music');
+
 
 albums.forEach((album, ai)=>{
 
-  const group = document.createElement('div');
+  const group =
+    document.createElement('div');
 
-  group.className = 'album-group';
+
+  group.className =
+    'album-group';
 
 
-  /* COVER */
+  /* ---------- COVER ---------- */
 
-  const coverWrap = document.createElement('div');
+  const coverWrap =
+    document.createElement('div');
 
-  coverWrap.className = 'cover-wrap';
+
+  coverWrap.className =
+    'cover-wrap';
 
 
   coverWrap.innerHTML = `
@@ -985,11 +1202,19 @@ albums.forEach((album, ai)=>{
 
       ${
         album.cover
-        ? `<img src="${album.cover}" alt="${album.title}">`
+
+        ? `
+          <img
+            src="${album.cover}"
+            alt="${album.title}"
+          >
+        `
+
         : '— cover —'
       }
 
     </div>
+
 
     <div class="meta">
 
@@ -1006,28 +1231,52 @@ albums.forEach((album, ai)=>{
   `;
 
 
-  /* TRACKS */
+  /* ---------- TRACKS ---------- */
 
-  const tracksInner = document.createElement('div');
+  const tracksInner =
+    document.createElement('div');
 
-  tracksInner.className = 'tracks-inner';
+
+  tracksInner.className =
+    'tracks-inner';
 
 
-  coverWrap.addEventListener('click', ()=>{
+  /* Mobile accordion */
 
-    if(!isMobileLayout()) return;
+  coverWrap.addEventListener(
+    'click',
+    ()=>{
 
-    tracksInner.classList.toggle('expanded');
+      if(!isMobileLayout())
+        return;
 
-  });
+      tracksInner.classList.toggle(
+        'expanded'
+      );
 
+    }
+  );
+
+
+  /* ---------- CREATE TRACKS ---------- */
 
   album.tracks.forEach((t,ti)=>{
 
-    const wrap = document.createElement('div');
+    const wrap =
+      document.createElement('div');
 
-    wrap.className = 'clip-wrap';
 
+    wrap.className =
+      'clip-wrap';
+
+
+    /*
+      If YouTube exists:
+      show YouTube thumbnail immediately.
+
+      If there is no YouTube:
+      show the number.
+    */
 
     wrap.innerHTML = `
 
@@ -1038,13 +1287,38 @@ albums.forEach((album, ai)=>{
         data-i="${ti}"
       >
 
-        <div class="ph">
-          ${t.number}
-        </div>
+        ${
+          t.youtube
 
-        <div class="dot"></div>
+          ? `
+
+            <img
+              class="youtube-thumb"
+              src="https://img.youtube.com/vi/${t.youtube}/maxresdefault.jpg"
+              alt="${t.title}"
+            >
+
+            <div class="youtube-play">
+
+              <div class="youtube-play-icon"></div>
+
+            </div>
+
+          `
+
+          : `
+
+            <div class="ph">
+              ${t.number}
+            </div>
+
+            <div class="dot"></div>
+
+          `
+        }
 
       </div>
+
 
       <div class="meta">
 
@@ -1072,68 +1346,107 @@ albums.forEach((album, ai)=>{
 
 
 /* =========================================================
-   PLAY INLINE
+   INLINE PLAYER
 ========================================================= */
 
-function playInline(el, kind, id){
+function playInline(
+  el,
+  kind,
+  id
+){
 
   el.innerHTML =
+
     kind === 'vimeo'
 
-      ? `
-        <iframe
-          src="https://player.vimeo.com/video/${id}?autoplay=1"
-          allow="autoplay; fullscreen; picture-in-picture"
-          allowfullscreen>
-        </iframe>
-      `
+    ? `
 
-      : `
-        <iframe
-          src="https://www.youtube.com/embed/${id}?autoplay=1&rel=0"
-          allow="autoplay; encrypted-media; picture-in-picture"
-          allowfullscreen>
-        </iframe>
-      `;
+      <iframe
+        src="https://player.vimeo.com/video/${id}?autoplay=1"
+        allow="autoplay; fullscreen; picture-in-picture"
+        allowfullscreen>
+      </iframe>
+
+    `
+
+    : `
+
+      <iframe
+        src="https://www.youtube.com/embed/${id}?autoplay=1&rel=0"
+        allow="autoplay; encrypted-media; picture-in-picture"
+        allowfullscreen>
+      </iframe>
+
+    `;
+
 }
 
 
 /* =========================================================
-   CLICK VIDEO
+   VIDEO CLICK HANDLING
 ========================================================= */
 
-document.querySelectorAll('.clip.playable').forEach(el=>{
+document
+  .querySelectorAll('.clip.playable')
+  .forEach(el=>{
 
-  el.addEventListener('click', ()=>{
+    el.addEventListener(
+      'click',
+      ()=>{
 
-    const i = +el.dataset.i;
+        const i =
+          +el.dataset.i;
 
 
-    if(el.dataset.kind === 'vimeo'){
+        /* VIMEO */
 
-      const p = projects[i];
+        if(
+          el.dataset.kind === 'vimeo'
+        ){
 
-      if(p.vimeo){
-        playInline(el, 'vimeo', p.vimeo);
+          const p =
+            projects[i];
+
+
+          if(p.vimeo){
+
+            playInline(
+              el,
+              'vimeo',
+              p.vimeo
+            );
+
+          }
+
+        }
+
+
+        /* YOUTUBE */
+
+        else{
+
+          const t =
+            albums[
+              +el.dataset.album
+            ].tracks[i];
+
+
+          if(t.youtube){
+
+            playInline(
+              el,
+              'youtube',
+              t.youtube
+            );
+
+          }
+
+        }
+
       }
-
-    }
-
-    else{
-
-      const t =
-        albums[+el.dataset.album]
-        .tracks[i];
-
-      if(t.youtube){
-        playInline(el, 'youtube', t.youtube);
-      }
-
-    }
+    );
 
   });
-
-});
 
 
 /* =========================================================
@@ -1142,34 +1455,48 @@ document.querySelectorAll('.clip.playable').forEach(el=>{
 
 document
   .getElementById('playBtn')
-  .addEventListener('click', ()=>{
+  .addEventListener(
+    'click',
+    ()=>{
 
-    document
-      .getElementById('intro')
-      .classList.add('hide');
+      document
+        .getElementById('intro')
+        .classList.add('hide');
 
-    document
-      .getElementById('app')
-      .classList.add('show');
 
-  });
+      document
+        .getElementById('app')
+        .classList.add('show');
+
+    }
+  );
 
 
 /* =========================================================
-   HORIZONTAL RAIL
+   MOBILE CHECK
 ========================================================= */
 
-const rail = document.getElementById('rail');
-
 const isMobileLayout = () =>
-  window.matchMedia('(max-width:680px)').matches;
+  window.matchMedia(
+    '(max-width:680px)'
+  ).matches;
+
+
+/* =========================================================
+   HORIZONTAL SCROLL
+========================================================= */
+
+const rail =
+  document.getElementById('rail');
 
 
 rail.addEventListener(
   'wheel',
   (e)=>{
 
-    if(isMobileLayout()) return;
+    if(isMobileLayout())
+      return;
+
 
     if(
       Math.abs(e.deltaY) >
@@ -1178,56 +1505,80 @@ rail.addEventListener(
 
       e.preventDefault();
 
-      rail.scrollLeft += e.deltaY;
+      rail.scrollLeft +=
+        e.deltaY;
 
     }
 
   },
-  {passive:false}
+  {
+    passive:false
+  }
 );
 
 
 /* =========================================================
-   NAVIGATION
+   NAV SWITCHING
 ========================================================= */
 
 document
-  .querySelectorAll('.nav-center button')
+  .querySelectorAll(
+    '.nav-center button'
+  )
   .forEach(btn=>{
 
-    btn.addEventListener('click', ()=>{
+    btn.addEventListener(
+      'click',
+      ()=>{
 
-      document
-        .querySelectorAll('.nav-center button')
-        .forEach(b =>
-          b.classList.remove('active')
-        );
-
-      btn.classList.add('active');
-
-
-      const view = btn.dataset.view;
-
-
-      document
-        .getElementById('filmsView')
-        .classList.toggle(
-          'hidden',
-          view !== 'films'
-        );
+        document
+          .querySelectorAll(
+            '.nav-center button'
+          )
+          .forEach(
+            b =>
+              b.classList.remove(
+                'active'
+              )
+          );
 
 
-      document
-        .getElementById('music')
-        .classList.toggle(
-          'hidden',
-          view !== 'music'
+        btn.classList.add(
+          'active'
         );
 
 
-      rail.scrollTo(0,0);
+        const view =
+          btn.dataset.view;
 
-    });
+
+        document
+          .getElementById(
+            'filmsView'
+          )
+          .classList.toggle(
+            'hidden',
+            view !== 'films'
+          );
+
+
+        document
+          .getElementById(
+            'music'
+          )
+          .classList.toggle(
+            'hidden',
+            view !== 'music'
+          );
+
+
+        rail.scrollTo(
+          0,
+          0
+        );
+
+      }
+    );
 
   });
 
@@ -1237,27 +1588,41 @@ document
 ========================================================= */
 
 const contact =
-  document.getElementById('contact');
-
-
-document
-  .getElementById('openContact')
-  .addEventListener(
-    'click',
-    () => contact.classList.add('open')
+  document.getElementById(
+    'contact'
   );
 
 
 document
-  .getElementById('cClose')
+  .getElementById(
+    'openContact'
+  )
   .addEventListener(
     'click',
-    () => contact.classList.remove('open')
+    () =>
+      contact.classList.add(
+        'open'
+      )
   );
 
 
 document
-  .getElementById('cform')
+  .getElementById(
+    'cClose'
+  )
+  .addEventListener(
+    'click',
+    () =>
+      contact.classList.remove(
+        'open'
+      )
+  );
+
+
+document
+  .getElementById(
+    'cform'
+  )
   .addEventListener(
     'submit',
     async (e)=>{
@@ -1266,19 +1631,27 @@ document
 
 
       const note =
-        document.getElementById('cnote');
+        document.getElementById(
+          'cnote'
+        );
 
 
       const name =
-        document.getElementById('cname').value;
+        document.getElementById(
+          'cname'
+        ).value;
 
 
       const email =
-        document.getElementById('cemail').value;
+        document.getElementById(
+          'cemail'
+        ).value;
 
 
       const message =
-        document.getElementById('cmsg').value;
+        document.getElementById(
+          'cmsg'
+        ).value;
 
 
       if(!FORMSPREE_ID){
@@ -1287,35 +1660,44 @@ document
           'Contact form not yet configured — add a Formspree form ID in the code.';
 
         return;
+
       }
 
 
       try{
 
-        const res = await fetch(
-          `https://formspree.io/f/${FORMSPREE_ID}`,
-          {
-            method:'POST',
+        const res =
+          await fetch(
+            `https://formspree.io/f/${FORMSPREE_ID}`,
+            {
+              method:'POST',
 
-            headers:{
-              'Content-Type':'application/json',
-              'Accept':'application/json'
-            },
+              headers:{
+                'Content-Type':
+                  'application/json',
 
-            body:JSON.stringify({
-              name,
-              email,
-              message
-            })
-          }
-        );
+                'Accept':
+                  'application/json'
+              },
+
+              body:
+                JSON.stringify({
+                  name,
+                  email,
+                  message
+                })
+            }
+          );
 
 
         if(res.ok){
 
           document
-            .getElementById('cform')
+            .getElementById(
+              'cform'
+            )
             .reset();
+
 
           note.textContent =
             'Message sent.';
@@ -1352,7 +1734,9 @@ document.addEventListener(
 
     if(e.key === 'Escape'){
 
-      contact.classList.remove('open');
+      contact.classList.remove(
+        'open'
+      );
 
     }
 
@@ -1362,4 +1746,3 @@ document.addEventListener(
 </script>
 
 </body>
-</html>
