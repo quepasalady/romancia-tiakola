@@ -148,6 +148,38 @@ a{
 }
 
 
+.intro-content{
+
+  display:flex;
+
+  flex-direction:column;
+
+  align-items:center;
+
+  gap:28px;
+
+  opacity:0;
+
+  animation:introFadeIn 2.2s ease forwards;
+
+  animation-delay:.35s;
+
+}
+
+
+@keyframes introFadeIn{
+
+  from{
+    opacity:0;
+  }
+
+  to{
+    opacity:1;
+  }
+
+}
+
+
 #intro h1{
 
   font-weight:700;
@@ -202,6 +234,11 @@ a{
 
   #playBtn{
     animation:none;
+  }
+
+  .intro-content{
+    animation:none;
+    opacity:1;
   }
 
 }
@@ -1481,11 +1518,15 @@ nav *{
 
 <div id="intro">
 
-  <h1>ROMANCIA</h1>
+  <div class="intro-content">
 
-  <button id="playBtn">
-    PLAY
-  </button>
+    <h1>ROMANCIA</h1>
+
+    <button id="playBtn">
+      PLAY
+    </button>
+
+  </div>
 
 </div>
 
@@ -1994,6 +2035,32 @@ projects[9] = {
 };
 
 
+/* 11 */
+
+projects[10] = {
+
+  title:"JOYEUSE SAINT VALENTIN",
+
+  year:"",
+
+  vimeo:"1229484813"
+
+};
+
+
+/* 12 */
+
+projects[11] = {
+
+  title:"RÊVE OU CRÈVE",
+
+  year:"",
+
+  vimeo:"1229485106"
+
+};
+
+
 
 /* =========================================================
    ALBUMS
@@ -2138,6 +2205,35 @@ const albums = [
 
         youtube:
           "9oNvK61nHig"
+
+      }
+
+    ]
+
+  },
+
+
+  {
+
+    title:"FAWZI — À L'AIDE",
+
+    date:"30 July 2025",
+
+    cover:"images/alaide-cover.jpg",
+
+    tracks:[
+
+      {
+
+        number:"01",
+
+        title:
+          "À L'aide",
+
+        youtube:null,
+
+        vimeo:
+          "1229484981"
 
       }
 
@@ -2382,34 +2478,61 @@ albums.forEach(
           'clip-wrap';
 
 
+        const trackId =
+          t.youtube || t.vimeo || null;
+
+        const trackKind =
+          t.youtube ? 'youtube' : 'vimeo';
+
+
         wrap.innerHTML = `
 
           <div
-            class="clip${t.youtube ? ' playable' : ''}"
-            data-kind="youtube"
+            class="clip${trackId ? ' playable' : ''}"
+            data-kind="${trackKind}"
             data-album="${ai}"
             data-i="${ti}"
           >
 
             ${
-              t.youtube
+              trackId
 
-              ? `
+              ? (
+                trackKind === 'youtube'
 
-                <img
-                  class="youtube-thumb"
-                  src="https://img.youtube.com/vi/${t.youtube}/maxresdefault.jpg"
-                  alt="${t.title}"
-                  onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/${t.youtube}/hqdefault.jpg';"
-                >
+                ? `
 
-                <div class="youtube-play">
+                  <img
+                    class="youtube-thumb"
+                    src="https://img.youtube.com/vi/${trackId}/maxresdefault.jpg"
+                    alt="${t.title}"
+                    onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/${trackId}/hqdefault.jpg';"
+                  >
 
-                  <div class="youtube-play-icon"></div>
+                  <div class="youtube-play">
 
-                </div>
+                    <div class="youtube-play-icon"></div>
 
-              `
+                  </div>
+
+                `
+
+                : `
+
+                  <img
+                    class="vimeo-thumb"
+                    src="https://vumbnail.com/${trackId}.jpg"
+                    alt="${t.title}"
+                  >
+
+                  <div class="vimeo-play">
+
+                    <div class="vimeo-play-icon"></div>
+
+                  </div>
+
+                `
+              )
 
               : `
 
@@ -2530,11 +2653,35 @@ document
             +el.dataset.i;
 
 
-          /* VIMEO */
+          const isAlbumTrack =
+            el.dataset.album !== undefined;
 
-          if(
-            el.dataset.kind === 'vimeo'
-          ){
+
+          if(isAlbumTrack){
+
+            const t =
+              albums[
+                +el.dataset.album
+              ].tracks[i];
+
+
+            const id =
+              t.youtube || t.vimeo;
+
+
+            if(id){
+
+              playInline(
+                el,
+                el.dataset.kind,
+                id
+              );
+
+            }
+
+          }
+
+          else{
 
             const p =
               projects[i];
@@ -2546,29 +2693,6 @@ document
                 el,
                 'vimeo',
                 p.vimeo
-              );
-
-            }
-
-          }
-
-
-          /* YOUTUBE */
-
-          else{
-
-            const t =
-              albums[
-                +el.dataset.album
-              ].tracks[i];
-
-
-            if(t.youtube){
-
-              playInline(
-                el,
-                'youtube',
-                t.youtube
               );
 
             }
@@ -2962,3 +3086,4 @@ document.addEventListener(
 </script>
 
 </body>
+</html>
