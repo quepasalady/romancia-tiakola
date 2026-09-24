@@ -856,7 +856,7 @@ nav *{
 
   z-index:200;
 
-  display:none;
+  display:flex;
 
   align-items:center;
 
@@ -866,12 +866,24 @@ nav *{
 
   overflow-y:auto;
 
+  opacity:0;
+
+  visibility:hidden;
+
+  pointer-events:none;
+
+  transition:opacity 650ms ease, visibility 650ms ease;
+
 }
 
 
 #contact.open{
 
-  display:flex;
+  opacity:1;
+
+  visibility:visible;
+
+  pointer-events:auto;
 
 }
 
@@ -1818,6 +1830,11 @@ const filmsView =
 
 projects.forEach(
   (p,i)=>{
+
+    if(!p.vimeo){
+      return;
+    }
+
 
     const wrap =
       document.createElement(
