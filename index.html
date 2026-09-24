@@ -862,7 +862,7 @@ nav *{
 
   justify-content:center;
 
-  padding:80px 7vw;
+  padding:100px 8vw;
 
   overflow-y:auto;
 
@@ -877,305 +877,121 @@ nav *{
 
 
 /* =========================================================
-   CONTACT GRID
+   CONTACT CENTER
 ========================================================= */
 
-.contact-grid{
+.contact-center{
 
   width:100%;
 
-  max-width:1250px;
+  max-width:640px;
 
-  display:grid;
+  display:flex;
 
-  grid-template-columns:
-    minmax(0,1fr)
-    1px
-    minmax(0,1fr);
+  flex-direction:column;
 
-  gap:7vw;
+  align-items:center;
 
-  align-items:start;
+  text-align:center;
 
 }
 
 
-/* =========================================================
-   CONTACT LEFT
-========================================================= */
+.contact-logo{
 
-.contact-left h2{
+  font-weight:700;
 
-  font-size:
-    clamp(42px,5vw,76px);
+  letter-spacing:-0.085em;
 
-  line-height:.95;
+  font-size:clamp(40px,8vw,96px);
 
-  font-weight:400;
+  line-height:1;
 
-  letter-spacing:-.055em;
-
-  margin-bottom:70px;
+  margin-bottom:52px;
 
 }
 
 
-.info-block{
-
-  margin-bottom:30px;
-
-}
-
-
-.info-label{
-
-  font-size:9px;
-
-  letter-spacing:.15em;
-
-  text-transform:uppercase;
-
-  color:var(--mute);
-
-  margin-bottom:7px;
-
-}
-
-
-.info-value{
+.contact-bio{
 
   font-size:13px;
 
-  line-height:1.55;
+  line-height:1.9;
+
+  color:rgba(255,255,255,.75);
 
 }
 
 
-.info-value a{
+.contact-bio p{
+
+  margin-bottom:22px;
+
+}
+
+
+.contact-bio a{
+
+  color:#fff;
+
+  border-bottom:1px solid rgba(255,255,255,.35);
 
   transition:opacity 200ms ease;
 
 }
 
 
-.info-value a:hover{
+.contact-bio a:hover{
 
-  opacity:.5;
-
-}
-
-
-/* =========================================================
-   CONTACT DIVIDER
-========================================================= */
-
-.contact-divider{
-
-  width:1px;
-
-  height:100%;
-
-  min-height:520px;
-
-  background:var(--line);
+  opacity:.6;
 
 }
 
 
 /* =========================================================
-   CONTACT FORM
+   CONTACT SOCIALS
 ========================================================= */
 
-.contact-right{
+.contact-socials{
 
-  width:100%;
+  display:flex;
 
-}
+  align-items:center;
 
+  gap:26px;
 
-.contact-form{
-
-  width:100%;
-
-}
-
-
-.form-row{
-
-  display:grid;
-
-  grid-template-columns:
-    1fr
-    1fr;
-
-  gap:25px;
+  margin-top:44px;
 
 }
 
 
-.field{
+.contact-socials a{
 
-  margin-bottom:30px;
+  display:flex;
 
-}
+  align-items:center;
 
+  justify-content:center;
 
-.field label{
+  opacity:.8;
 
-  display:block;
-
-  font-size:9px;
-
-  letter-spacing:.15em;
-
-  text-transform:uppercase;
-
-  color:var(--mute);
-
-  margin-bottom:9px;
+  transition:opacity 200ms ease;
 
 }
 
 
-.field input,
-.field select,
-.field textarea{
+.contact-socials a:hover{
 
-  width:100%;
-
-  background:transparent;
-
-  border:none;
-
-  border-bottom:
-    1px solid var(--line);
-
-  color:#fff;
-
-  font-family:inherit;
-
-  font-size:13px;
-
-  padding:10px 0;
-
-  border-radius:0;
-
-  outline:none;
-
-  transition:border-color 200ms ease;
+  opacity:1;
 
 }
 
 
-.field input::placeholder,
-.field textarea::placeholder{
+.contact-socials svg{
 
-  color:#555;
+  width:19px;
 
-}
-
-
-.field input:focus,
-.field select:focus,
-.field textarea:focus{
-
-  border-color:#fff;
-
-}
-
-
-.field select{
-
-  appearance:none;
-
-  -webkit-appearance:none;
-
-  cursor:pointer;
-
-  color:#fff;
-
-}
-
-
-.field select option{
-
-  background:#000;
-
-  color:#fff;
-
-}
-
-
-.field textarea{
-
-  min-height:120px;
-
-  resize:vertical;
-
-  line-height:1.5;
-
-}
-
-
-/* =========================================================
-   FORM BUTTON
-========================================================= */
-
-.form-submit{
-
-  margin-top:10px;
-
-  font-family:inherit;
-
-  font-size:10px;
-
-  letter-spacing:.16em;
-
-  text-transform:uppercase;
-
-  color:#fff;
-
-  border-bottom:
-    1px solid rgba(255,255,255,.5);
-
-  padding-bottom:6px;
-
-  transition:
-    opacity 200ms ease,
-    border-color 200ms ease;
-
-}
-
-
-.form-submit:hover{
-
-  opacity:.5;
-
-  border-color:#fff;
-
-}
-
-
-/* =========================================================
-   FORM MESSAGE
-========================================================= */
-
-.form-msg{
-
-  display:none;
-
-  margin-top:20px;
-
-  font-size:11px;
-
-  color:var(--mute);
-
-  line-height:1.5;
-
-}
-
-
-.form-msg.show{
+  height:19px;
 
   display:block;
 
@@ -1412,7 +1228,7 @@ nav *{
 
   #contact{
 
-    align-items:flex-start;
+    align-items:center;
 
     padding:
       100px
@@ -1424,59 +1240,18 @@ nav *{
   }
 
 
-  .contact-grid{
+  .contact-logo{
 
-    display:flex;
+    font-size:clamp(38px,13vw,64px);
 
-    flex-direction:column;
-
-    width:100%;
-
-    gap:50px;
+    margin-bottom:38px;
 
   }
 
 
-  .contact-left h2{
+  .contact-bio{
 
-    font-size:
-      clamp(42px,13vw,64px);
-
-    margin-bottom:50px;
-
-  }
-
-
-  .info-block{
-
-    margin-bottom:24px;
-
-  }
-
-
-  .contact-divider{
-
-    width:100%;
-
-    height:1px;
-
-    min-height:1px;
-
-  }
-
-
-  .form-row{
-
-    grid-template-columns:1fr;
-
-    gap:0;
-
-  }
-
-
-  .field{
-
-    margin-bottom:26px;
+    font-size:12.5px;
 
   }
 
@@ -1604,278 +1379,66 @@ nav *{
   </button>
 
 
-  <div class="contact-grid">
+  <div class="contact-center">
+
+    <h1 class="contact-logo">
+      ROMANCIA
+    </h1>
 
 
-    <!-- LEFT -->
+    <div class="contact-bio">
 
-    <div class="contact-left">
+      <p>
+        Romancia is a Paris-based director working across film, music and the audiovisual world.
+      </p>
 
-      <h2>
-        Travaillons<br>
-        ensemble.
-      </h2>
+      <p>
+        His work explores image, movement and atmosphere, with a strong focus on music, rhythm and visual storytelling.
+      </p>
 
+      <p>
+        Working across music videos, films and visual projects, he develops cinematic worlds that combine a strong sense of direction with an instinctive approach to emotion and energy.
+      </p>
 
-      <div class="info-block">
+      <p>
+        He has collaborated on various projects within the music industry, including work around albums and artists, as well as audiovisual projects for brands and creative platforms.
+      </p>
 
-        <div class="info-label">
-          Basé à
-        </div>
-
-        <div class="info-value">
-          Paris, France
-        </div>
-
-      </div>
-
-
-       <div class="info-block">
-
-        <div class="info-label">
-          Instagram
-        </div>
-
-        <div class="info-value">
-
-          <a
-            href="https://www.instagram.com/romancia.prod/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            @romancia.prod
-          </a>
-
-        </div>
-
-      </div>
-
-
-      <div class="info-block">
-
-        <div class="info-label">
-          TikTok
-        </div>
-
-        <div class="info-value">
-
-          <a
-            href="https://www.tiktok.com/@romanciaprod"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            @romanciaprod
-          </a>
-
-        </div>
-
-      </div>
-
-
-      <div class="info-block">
-
-        <div class="info-label">
-          Disponibilité
-        </div>
-
-        <div class="info-value">
-
-          Ouverts aux projets<br>
-
-          France &amp; International
-
-        </div>
-
-      </div>
+      <p>
+        Contact : <a href="mailto:romancia.prod@gmail.com">romancia.prod@gmail.com</a>
+      </p>
 
     </div>
 
 
+    <div class="contact-socials">
 
-    <!-- DIVIDER -->
-
-    <div class="contact-divider"></div>
-
-
-
-    <!-- RIGHT -->
-
-    <div class="contact-right">
-
-      <form
-        class="contact-form"
-        id="cform"
+      <a
+        href="https://www.instagram.com/romancia.prod/"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Instagram"
       >
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <rect x="2.5" y="2.5" width="19" height="19" rx="5"></rect>
+          <circle cx="12" cy="12" r="4.3"></circle>
+          <circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"></circle>
+        </svg>
+      </a>
 
 
-        <div class="form-row">
-
-
-          <div class="field">
-
-            <label for="cname">
-              Nom
-            </label>
-
-            <input
-              id="cname"
-              type="text"
-              name="name"
-              placeholder="Votre nom"
-              required
-            >
-
-          </div>
-
-
-          <div class="field">
-
-            <label for="cemail">
-              Email
-            </label>
-
-            <input
-              id="cemail"
-              type="email"
-              name="email"
-              placeholder="votre@email.com"
-              required
-            >
-
-          </div>
-
-        </div>
-
-
-
-        <div class="field">
-
-          <label for="ctype">
-            Type de projet
-          </label>
-
-          <select
-            id="ctype"
-            name="type"
-            required
-          >
-
-            <option
-              value=""
-              disabled
-              selected
-            >
-              Sélectionner
-            </option>
-
-            <option>
-              Clip Musical
-            </option>
-
-            <option>
-              Court Métrage
-            </option>
-
-            <option>
-              Publicité / Brand Film
-            </option>
-
-            <option>
-              Content Créateur
-            </option>
-
-            <option>
-              Documentaire
-            </option>
-
-            <option>
-              Autre
-            </option>
-
-          </select>
-
-        </div>
-
-
-
-        <div class="field">
-
-          <label for="cbudget">
-            Budget estimé
-          </label>
-
-          <select
-            id="cbudget"
-            name="budget"
-            required
-          >
-
-            <option
-              value=""
-              disabled
-              selected
-            >
-              Sélectionner
-            </option>
-
-            <option>
-              Moins de 2 000 €
-            </option>
-
-            <option>
-              2 000 – 5 000 €
-            </option>
-
-            <option>
-              5 000 – 15 000 €
-            </option>
-
-            <option>
-              15 000 € et plus
-            </option>
-
-          </select>
-
-        </div>
-
-
-
-        <div class="field">
-
-          <label for="cmsg">
-            Description du projet
-          </label>
-
-          <textarea
-            id="cmsg"
-            name="message"
-            placeholder="Décrivez votre projet, vos attentes, votre calendrier…"
-            required
-          ></textarea>
-
-        </div>
-
-
-
-        <button
-          type="submit"
-          class="form-submit"
-        >
-          Envoyer la demande
-        </button>
-
-
-
-        <div
-          class="form-msg"
-          id="cnote"
-        ></div>
-
-
-      </form>
+      <a
+        href="https://www.tiktok.com/@romanciaprod"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="TikTok"
+      >
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M16.6 5.82c-.9-.98-1.4-2.26-1.4-3.6h-3.15v13.7c0 1.62-1.32 2.94-2.94 2.94a2.94 2.94 0 0 1 0-5.88c.27 0 .53.04.77.11V9.9a6.1 6.1 0 0 0-.77-.05 6.1 6.1 0 1 0 6.1 6.1V8.8a7.6 7.6 0 0 0 4.44 1.42V7.07a4.9 4.9 0 0 1-2.05-1.25z"></path>
+        </svg>
+      </a>
 
     </div>
-
 
   </div>
 
@@ -2230,10 +1793,8 @@ const albums = [
         title:
           "À L'aide",
 
-        youtube:null,
-
-        vimeo:
-          "1229484981"
+        youtube:
+          "hRDj41YOamo"
 
       }
 
@@ -2242,25 +1803,6 @@ const albums = [
   }
 
 ];
-
-
-
-/* =========================================================
-   FORMSPREE
-========================================================= */
-
-/*
-  IMPORTANT:
-
-  Replace this with your Formspree ID.
-
-  Example:
-
-  const FORMSPREE_ID = "xabcdefg";
-
-*/
-
-const FORMSPREE_ID = "";
 
 
 
@@ -2857,6 +2399,11 @@ document
             0
           );
 
+
+          contact.classList.remove(
+            'open'
+          );
+
         }
       );
 
@@ -2906,159 +2453,6 @@ document
     }
   );
 
-
-
-/* =========================================================
-   CONTACT FORM
-========================================================= */
-
-document
-  .getElementById(
-    'cform'
-  )
-  .addEventListener(
-    'submit',
-    async (e)=>{
-
-      e.preventDefault();
-
-
-      const note =
-        document.getElementById(
-          'cnote'
-        );
-
-
-      const name =
-        document.getElementById(
-          'cname'
-        ).value.trim();
-
-
-      const email =
-        document.getElementById(
-          'cemail'
-        ).value.trim();
-
-
-      const type =
-        document.getElementById(
-          'ctype'
-        ).value;
-
-
-      const budget =
-        document.getElementById(
-          'cbudget'
-        ).value;
-
-
-      const message =
-        document.getElementById(
-          'cmsg'
-        ).value.trim();
-
-
-      if(
-        !FORMSPREE_ID
-      ){
-
-        note.textContent =
-          'Formulaire non configuré — ajoute ton ID Formspree dans le code.';
-
-        note.classList.add(
-          'show'
-        );
-
-        return;
-
-      }
-
-
-      try{
-
-        const res =
-          await fetch(
-            `https://formspree.io/f/${FORMSPREE_ID}`,
-            {
-
-              method:'POST',
-
-              headers:{
-
-                'Content-Type':
-                  'application/json',
-
-                'Accept':
-                  'application/json'
-
-              },
-
-              body:
-                JSON.stringify({
-
-                  name:name,
-
-                  email:email,
-
-                  type:type,
-
-                  budget:budget,
-
-                  message:message
-
-                })
-
-            }
-          );
-
-
-        if(
-          res.ok
-        ){
-
-          document
-            .getElementById(
-              'cform'
-            )
-            .reset();
-
-
-          note.textContent =
-            'Message envoyé — on vous répond rapidement.';
-
-          note.classList.add(
-            'show'
-          );
-
-        }
-
-        else{
-
-          note.textContent =
-            'Une erreur est survenue. Veuillez réessayer.';
-
-          note.classList.add(
-            'show'
-          );
-
-        }
-
-      }
-
-      catch(err){
-
-        note.textContent =
-          'Une erreur est survenue. Veuillez réessayer.';
-
-        note.classList.add(
-          'show'
-        );
-
-      }
-
-    }
-  );
 
 
 
