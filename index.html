@@ -1045,6 +1045,35 @@ nav *{
 
 
 /* =========================================================
+   CONTACT FOOTER
+========================================================= */
+
+.contact-footer{
+
+  position:absolute;
+
+  left:50%;
+
+  bottom:28px;
+
+  transform:translateX(-50%);
+
+  width:100%;
+
+  text-align:center;
+
+  font-size:9px;
+
+  letter-spacing:.12em;
+
+  color:rgba(255,255,255,.42);
+
+  white-space:nowrap;
+
+}
+
+
+/* =========================================================
    MOBILE
 ========================================================= */
 
@@ -1276,6 +1305,16 @@ nav *{
 
   }
 
+  .contact-footer{
+
+    bottom:18px;
+
+    font-size:8px;
+
+    letter-spacing:.1em;
+
+  }
+
 }
 
 
@@ -1335,17 +1374,17 @@ nav *{
     <div class="nav-center">
 
       <button
-        data-view="films"
+        data-view="music"
         class="active"
       >
-        FILMS
+        MUSIC VIDEOS
       </button>
 
 
       <button
-        data-view="music"
+        data-view="films"
       >
-        MUSIC VIDEOS
+        FILMS
       </button>
 
     </div>
@@ -1365,13 +1404,13 @@ nav *{
 
     <div
       class="view"
-      id="filmsView"
+      id="music"
     ></div>
 
 
     <div
       class="view hidden"
-      id="music"
+      id="filmsView"
     ></div>
 
   </div>
@@ -1450,6 +1489,10 @@ nav *{
         </svg>
       </a>
 
+    </div>
+
+    <div class="contact-footer">
+      © 2026 ROMANCIA — ALL RIGHTS RESERVED.
     </div>
 
   </div>
@@ -2238,6 +2281,44 @@ document
         )
         .classList.add(
           'show'
+        );
+
+      /* Always land on MUSIC VIDEOS after PLAY */
+      document
+        .querySelectorAll(
+          '.nav-center button'
+        )
+        .forEach(
+          b =>
+            b.classList.toggle(
+              'active',
+              b.dataset.view === 'music'
+            )
+        );
+
+      document
+        .getElementById(
+          'music'
+        )
+        .classList.remove(
+          'hidden'
+        );
+
+      document
+        .getElementById(
+          'filmsView'
+        )
+        .classList.add(
+          'hidden'
+        );
+
+      document
+        .getElementById(
+          'rail'
+        )
+        .scrollTo(
+          0,
+          0
         );
 
     }
